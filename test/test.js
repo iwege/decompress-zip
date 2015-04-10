@@ -217,7 +217,7 @@ describe('Extract', function () {
 describe('List', function () {
     listSamples.forEach(function (sample) {
         describe(sample.file, function () {
-            var tmpDir;
+            
             it('should list zip file', function (done) {
                 var zip = new DecompressZip(assetsDir.path(sample.file));
 
