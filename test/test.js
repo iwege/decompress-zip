@@ -21,6 +21,18 @@ var samples = [
         treeInspect: 'main-test-pack/spec.json'
     }
 ];
+var listSamples = [
+    {
+        // Default deflate algorithm
+        file: 'main-test-pack/deflate.zip',
+        treeInspect: 'main-test-pack/list.spec.json'
+    },
+    {
+        // "Store" (no compression, just merge stuff together)
+        file: 'main-test-pack/store.zip',
+        treeInspect: 'main-test-pack/list.spec.json'
+    }
+]
 
 describe('Smoke test', function () {
     it('should find the public interface', function () {
@@ -170,6 +182,29 @@ describe('Extract', function () {
                     assert.deepEqual(inspect, validInspect, 'extracted files matches the spec');
                     done();
                 }).catch(done);
+            });
+        });
+    });
+});
+
+describe('List', function () {
+    listSamples.forEach(function (sample) {
+        describe(sample.file, function () {
+            var tmpDir;
+            it('should list zip file', function (done) {
+                var zip = new DecompressZip(assetsDir.path(sample.file));
+
+                zip.on('list',function(list){
+                    var validInspect = assetsDir.read(sample.treeInspect, 'json');
+                    assert.deepEqual(list, validInspect, 'list files matches the spec');
+                });
+
+                zip.on('error',function(){
+                    assert(false, 'error callback should not be called');
+                    done();
+                });
+              
+               zip.list();
             });
         });
     });

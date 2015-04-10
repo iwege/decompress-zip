@@ -1,0 +1,8 @@
+[
+	"dir1/",
+	"dir1/dir2/",
+	"dir1/dir2/1KiB",
+	"dir1/dir2/2MiB",
+	"dir1/dir2/0B",
+	"empty/"
+]
