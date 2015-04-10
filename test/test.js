@@ -223,8 +223,14 @@ describe('List', function () {
 
                 zip.on('list',function(list){
                     var validInspect = assetsDir.read(sample.treeInspect, 'json');
-                    assert.deepEqual(list, validInspect, 'list files matches the spec');
-                    done();
+                    list = list.sort();
+                    validInspect = validInspect.sort();
+                    try{
+                        assert.deepEqual(list, validInspect, 'list files matches the spec');
+                        done();
+                    }catch(e){
+                        done(e);
+                    }
                 });
 
                 zip.on('error',function(){
